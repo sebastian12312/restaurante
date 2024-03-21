@@ -1,138 +1,45 @@
-/**
- ELIMINAR ITEM
- */
 
-
-var eliminarItem = document.querySelectorAll(".eliminar-item");
-
-for (let item of eliminarItem) {
-    item.addEventListener("click", (e) => {
-        var id_empleado = item.getAttribute("data-id");
-
-        const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-                confirmButton: "btn-aceptar",
-                cancelButton: "btn-eliminar"
-            },
-            buttonsStyling: false
-        });
-
-        swalWithBootstrapButtons.fire({
-            title: "¿Estás seguro?",
-            text: "No podrás revertir esto.",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Sí, eliminar!",
-            cancelButtonText: "No, cancelar!",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Realizar la solicitud Fetch para eliminar el usuario
-
-
-                   // Cambiar dinámicamente el href
-                   item.setAttribute("href", "/administrador/empleados/delete/" + id_empleado + "");
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`Error: ${response.statusText}`);
-
-                        }
-
-                        return response.text();
-                    })
-                    .then(data => {
-                        swalWithBootstrapButtons.fire({
-                            title: "Eliminado!",
-                            text: "El usuario ha sido eliminado.",
-                            icon: "success"
-                        });
-                        // Puedes recargar la página o actualizar la lista de usuarios aquí si es necesario
-                         setTimeout(function(){
-                         location.reload();
-                         },3000)
-                    })
-                    .catch(error => {
-                        console.error(error);
-                        swalWithBootstrapButtons.fire({
-                            title: "Error",
-                            text: "Error al eliminar el usuario.",
-                            icon: "error"
-                        });
-                    });
-            } else if (result.dismiss === Swal.DismissReason.cancel) {
-                swalWithBootstrapButtons.fire({
-                    title: "Cancelado",
-                    text: "El usuario está a salvo :)",
-                    icon: "error"
-                });
-            }
-        });
+// buscar empleado
+var valorEdit = document.querySelectorAll(".valorEdit");
+var rol =document.getElementById("rol");
+var tipo_id =document.getElementById("tipo_id");
+var id_empleado =document.getElementById("id_empleado");
+var nombre_empleado =document.getElementById("nombre_empleado");
+var apellido_empleado =document.getElementById("apellido_empleado");
+var correo_empleado =document.getElementById("correo_empleado");
+var telefono_empleado =document.getElementById("telefono_empleado");
+var direccion_empleado =document.getElementById("direccion_empleado");
+var password_empleado =document.getElementById("password_empleado");
+var id_estado =document.getElementById("id_estado");
+var id_establecimiento =document.getElementById("id_establecimiento");
+function abrirModal() {
+    const modal = new bootstrap.Modal(document.getElementById('EditarEmpleado'));
+    modal.show();
+}
+valorEdit.forEach((e) =>{
+    e.addEventListener("click", async ()=>{
+        e.setAttribute("data-bs-toggle", "modal");
+        e.setAttribute("data-bs-target", "#EditarEmpleado");
+        const idEmpleado = e.getAttribute("data-empleado")
+        const consulta = await fetch('/api/controlador/buscar/empleado/'+ idEmpleado, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+       });
+       const respuestaEmpleado = await consulta.json();
+       id_empleado.value = respuestaEmpleado.id_empleado
+       nombre_empleado.value = respuestaEmpleado.nombre_empleado
+       apellido_empleado.value = respuestaEmpleado.apellido_empleado      
+       correo_empleado.value = respuestaEmpleado.correo_empleado
+       rol.value = respuestaEmpleado.rol
+       tipo_id.value = respuestaEmpleado.tipo_id
+       telefono_empleado.value = respuestaEmpleado.telefono_empleado
+       password_empleado.value = respuestaEmpleado.password_empleado
+       direccion_empleado.value = respuestaEmpleado.direccion_empleado
+       id_estado.value = respuestaEmpleado.id_estado
+       id_establecimiento.value = respuestaEmpleado.id_establecimiento
+       abrirModal();
     });
-}
-
- var eliminarItem = document.querySelectorAll(".eliminar-item");
-
- eliminarItem.forEach(function(item) {
-     // Obtener el valor del atributo data-id
-
-
-     // Agregar un evento de clic
-     item.addEventListener("click", function(e) {
-         e.preventDefault(); // Prevenir el comportamiento predeterminado del enlace si es necesario
-
-         // SweetAlert para la confirmación
-         const swalWithBootstrapButtons = Swal.mixin({
-             customClass: {
-                 confirmButton: "btn-aceptar",
-                 cancelButton: "btn-eliminar"
-             },
-             buttonsStyling: false
-         });
-
-         swalWithBootstrapButtons.fire({
-             title: "¿Estás seguro?",
-             text: "No podrás revertir esto.",
-             icon: "warning",
-             showCancelButton: true,
-             confirmButtonText: "Sí, eliminar",
-             cancelButtonText: "No, cancelar"
-         }).then((result) => {
-             if (result.isConfirmed) {
-                 // Realizar la eliminación
-                 swalWithBootstrapButtons.fire({
-                     title: "Eliminado",
-                     text: "El archivo ha sido eliminado.",
-                     icon: "success"
-                 });
-             } else if (result.dismiss === Swal.DismissReason.cancel) {
-                 swalWithBootstrapButtons.fire({
-                     title: "Cancelado",
-                     text: "El archivo imaginario está a salvo :)",
-                     icon: "error"
-                 });
-             }
-         });
-     });
- });
-
-
-
- var AgregarItem = document.querySelectorAll(".agregar-item");
-for(Agregar of AgregarItem){
-    Agregar.addEventListener("click", (e)=>{
-        const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.onmouseenter = Swal.stopTimer;
-              toast.onmouseleave = Swal.resumeTimer;
-            }
-          });
-          Toast.fire({
-            icon: "success",
-            title: "Registro Completado!"
-          });
-    }) 
-}
+})

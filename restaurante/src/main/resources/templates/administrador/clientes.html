@@ -19,38 +19,47 @@
         <div class="contenedor_main">
             <main class="main">
                 <div class="titulo_seccion_dashboard">
-                    <a href="#">Empleados</a>
-                    <p>administrador/Empleados</p>
+                    <a href="#">Clientes</a>
+                    <p>administrador/Clientes</p>
                 </div>
                 <!-- cards -->
                 <div class="contenedor_cards_dashboard">
                     <div class="cards_dashboard">
                         <div class="texto_cards_dashboard">
-                            <a>Cantidad Empleados</a>
-                            <p th:text="${cantidadEmpleados}"></p>
+                            <a>Cantidad Reportes</a>
+                            <p>12312</p>
                         </div>
                         <div class="icon_cards_dashboard">
-                            <i class="bi bi-people"></i>
+                            <i class="bi bi-database"></i>
                         </div>
                     </div>
                     <div class="cards_dashboard">
                         <div class="texto_cards_dashboard">
-                            <a>Cantidad Usuarios Activos</a>
-                            <p th:text="${empleadosActivos}"></p>
+                            <a>Cantidad Reportes</a>
+                            <p>12312</p>
                         </div>
                         <div class="icon_cards_dashboard">
-                            <i class="bi bi-shield-plus"></i>
+                            <i class="bi bi-database"></i>
                         </div>
                     </div>
                     <div class="cards_dashboard">
                         <div class="texto_cards_dashboard">
-                            <a>Cantidad Administradores</a>
-                            <p>2</p>
+                            <a>Cantidad Reportes</a>
+                            <p>12312</p>
                         </div>
                         <div class="icon_cards_dashboard">
-                          <i class="bi bi-incognito"></i>
+                            <i class="bi bi-database"></i>
                         </div>
-                    </div>                    
+                    </div>
+                    <div class="cards_dashboard">
+                        <div class="texto_cards_dashboard">
+                            <a>Cantidad Reportes</a>
+                            <p>12312</p>
+                        </div>
+                        <div class="icon_cards_dashboard">
+                            <i class="bi bi-database"></i>
+                        </div>
+                    </div>
                 </div>
                 <!-- finis cards -->
                 <!-- table -->
@@ -70,7 +79,7 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Id empleado</th>
+                            <th>Id Cliente</th>
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Correo</th>
@@ -79,22 +88,22 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="empleado, iterStat : ${listaEmpleados}">
-                            <td th:text="${iterStat.count}"></td>
-                            <td th:text="${empleado.id_empleado}"></td>
-                            <td th:text="${empleado.nombre_empleado}"></td>
-                            <td th:text="${empleado.apellido_empleado}"></td>
-                            <td th:text="${empleado.correo_empleado}"></td>
-                            <td th:class="${empleado.id_estado == 1} ? 'estado_usuario_table activo' : (${empleado.id_estado == 2} ? 'estado_usuario_table bloqueado' : 'estado_usuario_table suspendido')">
-                                <i th:if="${empleado.id_estado == 1}" class="bi bi-check-circle"></i>
-                                <i th:if="${empleado.id_estado == 2}" class="bi bi-dash-circle"></i>
-                                <i th:if="${empleado.id_estado == 3}" class="bi bi-x-circle"></i>
+                        <tr th:each="clientes, iterStat : ${listaCliente}" >
+                            <td th:text="${clientes.id_cliente}"></td>
+                            <td></td>
+                            <td></td>
+                            <td ></td>
+                            <td ></td>
+                            <td>
+                                <i class="bi bi-check-circle"></i>
+                                <i  class="bi bi-dash-circle"></i>
+                                <i  class="bi bi-x-circle"></i>
                             </td>
                             <td class="btn_table">
-                                <a class="valorEdit"  th:data-empleado="${empleado.id_empleado}">
+                                <a class="valorEdit" >
                                     <i class="bi bi-floppy"></i>
                                 </a>
-                                 <a class="eliminar-item"  th:href="@{/administrador/empleados/delete/{id_empleado}(id_empleado=${empleado.id_empleado})}"><i class="bi bi-trash"></i></a>
+                                 <a class="eliminar-item" ><i class="bi bi-trash"></i></a>
                             </td>
                         </tr>
                         </tbody>
@@ -333,7 +342,8 @@
 <script src="../js/error.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI/t1glT5/6l4hW6PExM2qRiMGaB2yygDP1W5GI=" crossorigin="anonymous"></script>
-<div  th:if="${mensajeOk!=null}" class="alerta">
+
+<div  th:if="${mensajeOk != null}" class="alerta">
     <div class="contenedor_alerta_ok alert-success ">
         <a><i class="bi bi-check2-all"></i></a>
         <p th:text="${mensajeOk}"></p>
